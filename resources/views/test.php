@@ -1,0 +1,1 @@
+http://africanyoungbrains.com/.well-known/pki-validation/BD8B3F0436103784E287B1EB95123E3A.txt
