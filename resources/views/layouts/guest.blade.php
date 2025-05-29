@@ -239,7 +239,7 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="/DataScienceBootcamp">Data Science Training</a>
-                                        <a class="dropdown-item" href="/DataAcademyAfrica ">Data Academy Training</a>
+                                        <!-- <a class="dropdown-item" href="/DataAcademyAfrica ">Data Academy Training</a> -->
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
