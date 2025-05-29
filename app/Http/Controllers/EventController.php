@@ -151,6 +151,7 @@ class EventController extends Controller
         $participants = Participant::all();
         return view('Bootcamp.data-academy', compact('participants'));
     }
+    
     // public function storeDataScienceBootcamp(Request $request)
     // {
     //     $validated = $request->validate([

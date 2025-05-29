@@ -238,8 +238,8 @@
                                         Boot Camp Registration
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="/DataScienceBootcamp">Data Science</a>
-                                        <a class="dropdown-item" href="/DataAcademyAfrica ">Data Academy </a>
+                                        <a class="dropdown-item" href="/DataAcademyAfrica">Data Science</a>
+                                        <!-- <a class="dropdown-item" href="/DataAcademyAfrica ">Data Academy </a> -->
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
