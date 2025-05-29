@@ -24,8 +24,8 @@ Route::view('/team', 'team');
 Route::view('/award', 'award');
 Route::view('/sponsor', 'sponsor');
 Route::view('/contact', 'contact');
-Route::get('/DataAcademyAfrica', [EventController::class, 'DataAcademyAfricaIndex'])->name('DataAcademyAfrica');
-Route::get('/DataScienceBootcamp', [EventController::class, 'DataScienceBootcampIndex'])->name('DataScienceBootcamp');
+// Route::get('/DataAcademyAfrica', [EventController::class, 'DataAcademyAfricaIndex'])->name('DataAcademyAfrica');
+Route::get('/DataAcademyAfrica', [EventController::class, 'DataScienceBootcampIndex'])->name('DataScienceBootcamp');
 Route::post('/registerDataAcademyAfrica', [EventController::class, 'storeDataAcademyAfrica'])->name('form.store.DataAcademyAfrica');
 Route::post('/registerDataScienceBootcamp', [EventController::class, 'storeDataScienceBootcamp'])->name('form.store.DataScienceBootcamp');
 
