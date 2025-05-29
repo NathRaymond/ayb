@@ -28,17 +28,16 @@
                         <table id="dataScienceTable" class="table table-bordered dt-responsive nowrap table-striped align-middle mb-0" style="width:100%">
                             <thead class="table-navy">
                                 <tr>
-                                    <th scope="col">#</th>
+                                    <th scope="col">S/N</th>
                                     <th scope="col">First Name</th>
                                     <th scope="col">Last Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
                                     <th scope="col">Country</th>
-                                    <th scope="col">Job Title</th>
-                                    <th scope="col">Join As</th>
-                                    <th scope="col">Event Type</th>
-                                    <th scope="col">Date Registered</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col">Education Level</th>
+                                    <th scope="col">Why Apply</th>
+                                    <th scope="col">Referral Source</th>
+                                    <th scope="col">Application Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,18 +49,10 @@
                                     <td class="text-truncate" style="max-width: 150px;">{{ $scholarship->email }}</td>
                                     <td>{{ $scholarship->phone }}</td>
                                     <td>{{ $scholarship->country }}</td>
-                                    <td>{{ $scholarship->jobtitle }}</td>
-                                    <td>{{ $scholarship->joinas }}</td>
-                                    <td>{{ $scholarship->eventtype }}</td>
-                                    <td>{{ $scholarship->created_at->format('M d, Y') }}</td>
-                                    <td class="d-flex">
-                                        <a href="" class="btn btn-sm btn-outline-navy me-1">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="" class="btn btn-sm btn-outline-navy">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    </td>
+                                    <td>{{ $scholarship->education_level }}</td>
+                                    <td>{{ $scholarship->why_apply }}</td>
+                                    <td>{{ $scholarship->referral_source }}</td>
+                                    <td>{{ $scholarship->application_date->format('M d, Y') }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
