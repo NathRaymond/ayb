@@ -8,7 +8,17 @@
                 <div class="card-body p-5">
                     <h1 class="mb-5 text-center display-5 fw-bold">Scholarship Application</h1>
                     
-                    <form action="{{ route('scholarship.store') }}" method="POST" style="font-size: 1.1rem;">
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    
+                    <form action="{{ route('scholarship.store') }}" method="POST" style="font-size: 1.1rem;" id="scholarshipForm">
                         @csrf
                         <input type="hidden" name="token" value="{{ $token }}">
                         
@@ -34,42 +44,58 @@
                             <div class="col-md-6 mb-4">
                                 <label for="phone" class="form-label">Phone Number</label>
                                 <input type="tel" id="phone" name="phone" class="form-control form-control-lg" 
-                                    placeholder="Enter your phone number" required>
+                                    placeholder="Enter your phone number" required value="{{ old('phone') }}">
+                                @error('phone')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                         
                         <div class="mb-4">
                             <label for="country" class="form-label">Country</label>
                             <input type="text" id="country" name="country" class="form-control form-control-lg" 
-                                placeholder="Country" required>
+                                placeholder="Country" required value="{{ old('country') }}">
+                            @error('country')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         
                         <div class="mb-4">
                             <label for="education_level" class="form-label">Highest Education Level</label>
                             <select id="education_level" name="education_level" class="form-select form-select-lg" required>
                                 <option value="" selected disabled>Select Education Level</option>
-                                <option value="High School">High School</option>
-                                <option value="Bachelor's Degree">Bachelor's Degree</option>
-                                <option value="Master's Degree">Master's Degree</option>
-                                <option value="PhD">PhD</option>
-                                <option value="Other">Other</option>
+                                <option value="High School" {{ old('education_level') == 'High School' ? 'selected' : '' }}>High School</option>
+                                <option value="Bachelor's Degree" {{ old('education_level') == 'Bachelor\'s Degree' ? 'selected' : '' }}>Bachelor's Degree</option>
+                                <option value="Master's Degree" {{ old('education_level') == 'Master\'s Degree' ? 'selected' : '' }}>Master's Degree</option>
+                                <option value="PhD" {{ old('education_level') == 'PhD' ? 'selected' : '' }}>PhD</option>
+                                <option value="Other" {{ old('education_level') == 'Other' ? 'selected' : '' }}>Other</option>
                             </select>
+                            @error('education_level')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         
                         <div class="mb-4">
                             <label for="why_apply" class="form-label">Why are you applying for this scholarship? (Minimum 50 characters)</label>
                             <textarea id="why_apply" name="why_apply" class="form-control form-control-lg" 
-                                rows="4" required minlength="50"></textarea>
+                                rows="4" required minlength="50">{{ old('why_apply') }}</textarea>
+                            @error('why_apply')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            <div class="form-text">Characters: <span id="charCount">0</span>/50</div>
                         </div>
                         
                         <div class="mb-4">
                             <label for="referral_source" class="form-label">How did you hear about us? (Optional)</label>
                             <input type="text" id="referral_source" name="referral_source" 
-                                class="form-control form-control-lg" placeholder="Social media, friend, etc.">
+                                class="form-control form-control-lg" placeholder="Social media, friend, etc." value="{{ old('referral_source') }}">
                         </div>
                         
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary px-5 py-3 fs-5">Submit Application</button>
+                            <button type="submit" class="btn btn-primary px-5 py-3 fs-5" id="submitBtn">
+                                Submit Application
+                                <span class="spinner-border spinner-border-sm d-none" id="spinner"></span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -77,4 +103,29 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Character count for why_apply
+        const whyApply = document.getElementById('why_apply');
+        const charCount = document.getElementById('charCount');
+        
+        whyApply.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+        });
+        
+        // Form submission loader
+        const form = document.getElementById('scholarshipForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        
+        form.addEventListener('submit', function() {
+            submitBtn.disabled = true;
+            spinner.classList.remove('d-none');
+        });
+    });
+</script>
+@endpush
+
 @endsection

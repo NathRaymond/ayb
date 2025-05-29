@@ -329,36 +329,33 @@ class EventController extends Controller
             'referral_source' => 'nullable|string|max:255',
         ]);
 
-        \Log::debug('Scholarship submission data:', $validated); // Log input data
-
         try {
-            // Verify token is still valid
+            // Verify token and email match
             $registration = BootCamp::where('scholarship_token', $validated['token'])
                 ->where('email', $validated['email'])
                 ->first();
 
             if (!$registration) {
-                \Log::error('Invalid token or email:', [
-                    'token' => $validated['token'],
-                    'email' => $validated['email']
-                ]);
-
                 return redirect()->back()
                     ->withInput()
                     ->withErrors([
-                        'error' => 'Invalid scholarship application link. Please register first.'
+                        'error' => 'Invalid scholarship application link or email mismatch. Please use the link from your registration email.'
                     ]);
             }
 
-            // Add token to validated data for saving
-            $validated['boot_camp_id'] = $registration->id;
-
-            \Log::debug('Creating scholarship record:', $validated);
-
             // Create scholarship application
-            $scholarship = Scholarship::create($validated);
-
-            \Log::debug('Scholarship created:', $scholarship->toArray());
+            $scholarship = Scholarship::create([
+                'boot_camp_id' => $registration->id,
+                'firstname' => $validated['firstname'],
+                'lastname' => $validated['lastname'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'country' => $validated['country'],
+                'education_level' => $validated['education_level'],
+                'why_apply' => $validated['why_apply'],
+                'referral_source' => $validated['referral_source'],
+                'application_date' => now(),
+            ]);
 
             // Send confirmation email
             Mail::to($validated['email'])->send(new ScholarshipConfirmation(
@@ -366,20 +363,17 @@ class EventController extends Controller
                 $validated['lastname']
             ));
 
-            // Clear the token so it can't be used again
+            // Clear the token
             $registration->update(['scholarship_token' => null]);
 
             return redirect()->route('scholarship.thankyou');
         } catch (\Exception $e) {
-            \Log::error('Scholarship submission failed:', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
+            \Log::error('Scholarship Application Error: ' . $e->getMessage());
 
             return redirect()->back()
                 ->withInput()
                 ->withErrors([
-                    'error' => 'Scholarship application failed: ' . $e->getMessage()
+                    'error' => 'Application failed. Error: ' . (config('app.debug') ? $e->getMessage() : 'Please try again later.')
                 ]);
         }
     }

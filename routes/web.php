@@ -38,7 +38,7 @@ Route::post('/scholarship/apply', [EventController::class, 'storeScholarshipAppl
 Route::get('/scholarship/thank-you', function () {
     return view('scholarship-thankyou');
 })->name('scholarship.thankyou');
-// Auth::routes();
+
 
 Route::get('/home', [GuestController::class, 'index'])->name('home'); // Consider fixing if HomeController exists
 Route::get('/shop', [GuestController::class, 'shop'])->name('shop');
