@@ -261,18 +261,14 @@ class EventController extends Controller
         ]);
 
         $validated['eventtype'] = 'DataScience';
-        $validated['scholarship_token'] = Str::random(40); // Generate token upfront
 
         try {
-            // Check for existing registration using firstOrNew to avoid duplicates
-            $registration = BootCamp::firstOrNew(
-                [
-                    'email' => $validated['email'],
-                    $validated
-                ]
-            );
+            // Check for existing registration
+            $exists = BootCamp::where('email', $validated['email'])
+                ->where('eventtype', 'DataScience')
+                ->exists();
 
-            if ($registration->exists) {
+            if ($exists) {
                 return redirect()->back()
                     ->withInput()
                     ->withErrors([
@@ -280,14 +276,16 @@ class EventController extends Controller
                     ]);
             }
 
-            // Save everything in one operation
-            $registration->save();
+            // Generate token and create record in one operation
+            $registration = BootCamp::create(array_merge($validated, [
+                'scholarship_token' => Str::random(40)
+            ]));
 
-            // Send email (queue it for better performance)
-            Mail::to($validated['email'])->queue(new BootcampRegistration(
+            // Send email (using send instead of queue for immediate delivery)
+            Mail::to($validated['email'])->send(new BootcampRegistration(
                 $validated['firstname'],
                 $validated['lastname'],
-                route('scholarship.apply', ['token' => $validated['scholarship_token']])
+                route('scholarship.apply', ['token' => $registration->scholarship_token])
             ));
 
             return redirect()->back()
@@ -298,7 +296,8 @@ class EventController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->withErrors([
-                    'error' => 'Registration failed. Please try again. Error: ' . $e->getMessage()
+                    'error' => 'Registration failed. Please try again. ' .
+                        (config('app.debug') ? $e->getMessage() : '')
                 ]);
         }
     }
