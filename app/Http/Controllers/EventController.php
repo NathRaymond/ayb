@@ -329,14 +329,36 @@ class EventController extends Controller
             'referral_source' => 'nullable|string|max:255',
         ]);
 
+        \Log::debug('Scholarship submission data:', $validated); // Log input data
+
         try {
             // Verify token is still valid
             $registration = BootCamp::where('scholarship_token', $validated['token'])
                 ->where('email', $validated['email'])
-                ->firstOrFail();
+                ->first();
+
+            if (!$registration) {
+                \Log::error('Invalid token or email:', [
+                    'token' => $validated['token'],
+                    'email' => $validated['email']
+                ]);
+
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors([
+                        'error' => 'Invalid scholarship application link. Please register first.'
+                    ]);
+            }
+
+            // Add token to validated data for saving
+            $validated['boot_camp_id'] = $registration->id;
+
+            \Log::debug('Creating scholarship record:', $validated);
 
             // Create scholarship application
-            Scholarship::create($validated);
+            $scholarship = Scholarship::create($validated);
+
+            \Log::debug('Scholarship created:', $scholarship->toArray());
 
             // Send confirmation email
             Mail::to($validated['email'])->send(new ScholarshipConfirmation(
@@ -349,10 +371,15 @@ class EventController extends Controller
 
             return redirect()->route('scholarship.thankyou');
         } catch (\Exception $e) {
+            \Log::error('Scholarship submission failed:', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
             return redirect()->back()
                 ->withInput()
                 ->withErrors([
-                    'error' => 'Scholarship application failed. Please try again later.'
+                    'error' => 'Scholarship application failed: ' . $e->getMessage()
                 ]);
         }
     }
