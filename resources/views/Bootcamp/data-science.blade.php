@@ -138,7 +138,7 @@
         @if(session('success'))
         Swal.fire({
             icon: 'success',
-            title: 'Success!',
+            title: 'Success, A Scholarphip message has been sent to your email. Visit to apply!',
             text: '{{ session('
             success ') }}',
             confirmButtonText: 'OK',

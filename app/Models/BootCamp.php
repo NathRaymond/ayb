@@ -18,6 +18,7 @@ class BootCamp extends Model
         'country',
         'jobtitle',
         'joinas',
-        'eventtype'
+        'eventtype',
+        'scholarship_token'
     ];
 }

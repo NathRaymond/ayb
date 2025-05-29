@@ -259,20 +259,16 @@ class EventController extends Controller
             'jobtitle' => 'required|string|max:255',
             'joinas' => 'required|string|in:Student,Trainer,Admin',
         ]);
-
+        
         $validated['eventtype'] = 'DataScience';
-        $validated['scholarship_token'] = Str::random(40); // Generate token upfront
 
         try {
-            // Check for existing registration using firstOrNew to avoid duplicates
-            $registration = BootCamp::firstOrNew(
-                [
-                    'email' => $validated['email'],
-                    $validated
-                ]
-            );
+            // Check for existing registration
+            $exists = BootCamp::where('email', $validated['email'])
+                ->where('eventtype', 'DataScience')
+                ->exists();
 
-            if ($registration->exists) {
+            if ($exists) {
                 return redirect()->back()
                     ->withInput()
                     ->withErrors([
@@ -280,25 +276,26 @@ class EventController extends Controller
                     ]);
             }
 
-            // Save everything in one operation
-            $registration->save();
+            $registration = BootCamp::create($validated);
 
-            // Send email (queue it for better performance)
-            Mail::to($validated['email'])->queue(new BootcampRegistration(
+            // Generate a unique token for the scholarship link
+            $token = Str::random(40);
+            $registration->update(['scholarship_token' => $token]);
+
+            // Send email with scholarship link
+            Mail::to($validated['email'])->send(new BootcampRegistration(
                 $validated['firstname'],
                 $validated['lastname'],
-                route('scholarship.apply', ['token' => $validated['scholarship_token']])
+                route('scholarship.apply', ['token' => $token])
             ));
 
             return redirect()->back()
-                ->with('success', 'Registration successful! Check your email for scholarship link.');
+                ->with('success', 'Data Science Bootcamp registration successful! Check your email for scholarship application link.');
         } catch (\Exception $e) {
-            \Log::error('Registration Error: ' . $e->getMessage());
-
             return redirect()->back()
                 ->withInput()
                 ->withErrors([
-                    'error' => 'Registration failed. Please try again. Error: ' . $e->getMessage()
+                    'error' => 'Registration failed. Please try again later.'
                 ]);
         }
     }
@@ -316,7 +313,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function storeScholarshipApplication(Request $request)
+    public function storeScholarshipApplication(Request $request)2
     {
         $validated = $request->validate([
             'token' => 'required|string',
