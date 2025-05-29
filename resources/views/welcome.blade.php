@@ -44,9 +44,11 @@
             background-color: #67a4e4f5;
             color: #f1f1f1;
         }
+
         .menu_fixed span {
             color: #f9f9f9 !important;
         }
+
         .cta_part_text p {
             color: #4c4646 !important;
             text-transform: uppercase;
@@ -86,16 +88,25 @@
                         <div class="collapse navbar-collapse main-menu-item justify-content-end" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="/">Home</a>
+                                    <a class="nav-link" href="/" style="font-size:13px">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="about">About</a>
+                                    <a class="nav-link" href="about" style="font-size:13px">About</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="team">Team</a>
+                                    <a class="nav-link" href="team" style="font-size:13px">Team</a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:13px">
+                                        Academy Training Registration
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="/DataScienceBootcamp">Data Science Training</a>
+                                        <a class="dropdown-item" href="/DataAcademyAfrica ">Data Academy Training</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:13px">
                                         Events
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -104,17 +115,17 @@
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="sponsor">Partners</a>
+                                    <a class="nav-link" href="sponsor" style="font-size:13px">Partners</a>
                                 </li>
-                                
+
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/meetups">Meet Up</a>
+                                    <a class="nav-link" href="/meetups" style="font-size:13px">Meet Up</a>
                                 </li>
                                 {{-- <li class="nav-item">
                                     <a class="nav-link" href="shop">AYB SHOP</a>
                                 </li> --}}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact">Contact</a>
+                                    <a class="nav-link" href="contact" style="font-size:13px">Contact</a>
                                 </li>
                             </ul>
                         </div>
@@ -251,7 +262,8 @@
                         <img src="img/about_img_1.jpg" class="img_1" alt="" width="457" height="542">
                         <img src="img/about_img_2.jpg" class="img_2" alt="" width="383.99" height="360">
                         <h2><span class="text-white">Grooming</span> <span class="">Youths</span> For The<br>
-                            <span class="text-white">Future</span></h2>
+                            <span class="text-white">Future</span>
+                        </h2>
                     </div>
                 </div>
                 <div class="offset-lg-1 col-lg-4">
@@ -339,11 +351,10 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <p class="footer-text m-0">
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                     Copyright ©<script>
                                         document.write(new Date().getFullYear());
-                                    </script> All rights reserved | Designed by <a href="http://dpiainnovations.com/">D-pia Innovations</a> | Template <i class="fa" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    </script> All rights reserved | Designed by
+                                    <a href="https://www.africanyoungbrains.com/">AYB</a>
                                 </p>
                             </div>
                         </div>

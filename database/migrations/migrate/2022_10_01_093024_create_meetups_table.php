@@ -20,7 +20,7 @@ class CreateMeetupsTable extends Migration
             $table->string('email');
             $table->string('institution');
             $table->string('designation');
-            $table->enum('group', ['participant', 'volunteer', 'exhibitor'])->nullable();
+            $table->enum('joinas', ['Student', 'Trainer', 'Admin']);
             $table->timestamps();
         });
     }

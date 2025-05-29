@@ -5,17 +5,16 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MeetUpController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\QuizController;
+use App\Http\Controllers\MemberController;
+use App\Models\BootCamp;
 use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 Route::get('/', [GuestController::class, 'index'])->name('welcome');
@@ -24,50 +23,78 @@ Route::view('/team', 'team');
 Route::view('/award', 'award');
 Route::view('/sponsor', 'sponsor');
 Route::view('/contact', 'contact');
+Route::get('/DataAcademyAfrica', [EventController::class, 'DataAcademyAfricaIndex'])->name('DataAcademyAfrica');
+Route::get('/DataScienceBootcamp', [EventController::class, 'DataScienceBootcampIndex'])->name('DataScienceBootcamp');
+Route::post('/registerDataAcademyAfrica', [EventController::class, 'storeDataAcademyAfrica'])->name('form.store.DataAcademyAfrica');
+Route::post('/registerDataScienceBootcamp', [EventController::class, 'storeDataScienceBootcamp'])->name('form.store.DataScienceBootcamp');
 
+// Scholarship routes
+Route::get('/scholarship/apply/{token}', [EventController::class, 'showScholarshipForm'])
+    ->name('scholarship.apply');
+
+Route::post('/scholarship/apply', [EventController::class, 'storeScholarshipApplication'])
+    ->name('scholarship.store');
+
+Route::get('/scholarship/thank-you', function () {
+    return view('scholarship-thankyou');
+})->name('scholarship.thankyou');
 // Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/shop', 'GuestController@shop')->name('shop');
+Route::get('/home', [GuestController::class, 'index'])->name('home'); // Consider fixing if HomeController exists
+Route::get('/shop', [GuestController::class, 'shop'])->name('shop');
 
-//Event routes
+// Event Routes
 Route::get('/event', [EventController::class, 'index'])->name('event.index');
-Route::get('/events/create', ['middleware' => 'auth', 'uses' => 'EventController@createEvent'])->name('create/event');
-Route::post('/events/create', ['middleware' => 'auth', 'uses' => 'EventController@storeEvent'])->name('event.save');
-Route::get('/events/{event}', ['middleware' => 'auth', 'uses' => 'EventController@show'])->name('event.show');
-Route::get('/events/{event}/edit', ['middleware' => 'auth', 'uses' => 'EventController@editEvent'])->name('event.edit');
-Route::patch('/events/{event}/update', ['middleware' => 'auth', 'uses' => 'EventController@updateEvent'])->name('update.event');
-Route::delete('/events/{event}/delete', ['middleware' => 'auth', 'uses' => 'EventController@delete'])->name('event.delete');
-Route::get('/events', ['middleware' => 'auth', 'uses' => 'EventController@eventDashboard'])->name('event.dashboard');
-Route::get('/past-event', ['middleware' => 'auth', 'uses' => 'EventController@uploadPastEventPicture'])->name('event.past');
-Route::post('/past-event', ['middleware' => 'auth', 'uses' => 'FileController@upload'])->name('upload');
-Route::get('/past-event/{event}', ['middleware' => 'auth', 'uses' => 'EventController@showPastEvent'])->name('event.past.show');
-Route::get('/past-event/{event}/edit', ['middleware' => 'auth', 'uses' => 'EventController@editPastEvent'])->name('event.past.edit');
-Route::patch('/past-event/{event}', ['middleware' => 'auth', 'uses' => 'EventController@updatePastEvent'])->name('event.past.update');
-Route::delete('/past-event/{event}/delete', ['middleware' => 'auth', 'uses' => 'EventController@deletePastEvent'])->name('event.past.delete');
+Route::middleware('auth')->group(function () {
+    Route::get('/events/create', [EventController::class, 'createEvent'])->name('create/event');
+    Route::post('/events/create', [EventController::class, 'storeEvent'])->name('event.save');
+    Route::get('/events/{event}', [EventController::class, 'show'])->name('event.show');
+    Route::get('/events/{event}/edit', [EventController::class, 'editEvent'])->name('event.edit');
+    Route::patch('/events/{event}/update', [EventController::class, 'updateEvent'])->name('update.event');
+    Route::delete('/events/{event}/delete', [EventController::class, 'delete'])->name('event.delete');
+    Route::get('/events', [EventController::class, 'eventDashboard'])->name('event.dashboard');
 
-//Member Registration
+    Route::get('/datascience/applicant', [EventController::class, 'bootcampDatascience'])->name('bootcamp.datascience');
+    Route::get('/dataacademy/applicant', [EventController::class, 'bootcampDataacademy'])->name('bootcamp.dataacademy');
+
+    Route::get('/past-event', [EventController::class, 'uploadPastEventPicture'])->name('event.past');
+    Route::post('/past-event', [FileController::class, 'upload'])->name('upload');
+    Route::get('/past-event/{event}', [EventController::class, 'showPastEvent'])->name('event.past.show');
+    Route::get('/past-event/{event}/edit', [EventController::class, 'editPastEvent'])->name('event.past.edit');
+    Route::patch('/past-event/{event}', [EventController::class, 'updatePastEvent'])->name('event.past.update');
+    Route::delete('/past-event/{event}/delete', [EventController::class, 'deletePastEvent'])->name('event.past.delete');
+    Route::get('/participants', [EventController::class, 'participantsIndex'])->name('participants');
+    Route::get('/export-bootcamps/{eventtype}', [App\Http\Controllers\EventController::class, 'exportBootcamps'])->name('export.bootcamps');
+});
+
+// Member Registration
 Route::resource('member', MemberController::class);
+
+// Gallery
 Route::resource('gallery', GalleryController::class);
 Route::get('/manage', [GalleryController::class, 'manageGallery'])->name('gallery.manage');
 
+// Meetups
 Route::get('/meetups', [MeetUpController::class, 'index'])->name('meetup.register.view');
 Route::post('/meetups', [MeetUpController::class, 'store'])->name('meetup.register.store');
 
-//Export Data
-Route::get('/export/participants', ['middleware' => 'auth', 'uses' => 'FileController@downloadParticipantExcel'])->name('export.participant');
-Route::get('/export/events', ['middleware' => 'auth', 'uses' => 'FileController@downloadMemberExcel'])->name('export.member');
+// Export Data
+Route::middleware('auth')->group(function () {
+    Route::get('/export/participants', [FileController::class, 'downloadParticipantExcel'])->name('export.participant');
+    Route::get('/export/events', [FileController::class, 'downloadMemberExcel'])->name('export.member');
+});
 
-
-//Quiz debate
+// Quiz Debate
 Route::get('/quiz-debate', [QuizController::class, 'index'])->name('quiz.index');
 Route::post('/quiz-debate', [QuizController::class, 'store'])->name('quiz.store');
 
-
+// Dashboard & Profile
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    $dataScienceCount = BootCamp::where('eventtype', 'DataScience')->count();
+    $dataAcademyCount = BootCamp::where('eventtype', 'DataAcademy')->count();
 
+    return view('dashboard', compact('dataScienceCount', 'dataAcademyCount'));
+})->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

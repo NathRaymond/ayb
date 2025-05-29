@@ -7,7 +7,7 @@ use App\Models\MeetUp;
 
 class MeetUpController extends Controller
 {
-    public function index(Request $request)
+   public function index(Request $request)
     {
         return view('meetups.index');
     }

@@ -3,8 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use App\Mail\BootcampRegistration;
+use App\Mail\ScholarshipConfirmation;
 use \App\Models\Event;
+use \App\Models\Participant;
 use \App\Models\GalleryImage;
+use \App\Models\BootCamp;
+use \App\Models\Scholarship;
+use App\Exports\BootcampsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class EventController extends Controller
 {
@@ -78,11 +88,12 @@ class EventController extends Controller
         return redirect()->back()->with(['message' => 'You have registered']);
     }
 
-    public function participants(Request $request)
+    public function participantsIndex(Request $request)
     {
         $participants = Participant::all();
         return view('participant.index', compact('participants'));
     }
+
 
     public function viewParticipant(Request $request, Participant $participant)
     {
@@ -130,5 +141,217 @@ class EventController extends Controller
         $event->delete();
         return redirect()->back()->with(['message' => $event->name . ' deleted']);
     }
+    public function DataScienceBootcampIndex(Request $request)
+    {
+        $participants = Participant::all();
+        return view('Bootcamp.data-science', compact('participants'));
+    }
+    public function DataAcademyAfricaIndex(Request $request)
+    {
+        $participants = Participant::all();
+        return view('Bootcamp.data-academy', compact('participants'));
+    }
+    // public function storeDataScienceBootcamp(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'firstname' => 'required|string|max:255',
+    //         'lastname' => 'required|string|max:255',
+    //         'email' => 'required|email|max:255',
+    //         'phone' => 'required|string|max:15',
+    //         'country' => 'required|string|max:255',
+    //         'jobtitle' => 'required|string|max:255',
+    //         'joinas' => 'required|string|in:Student,Trainer,Admin',
+    //     ]);
 
+    //     $validated['eventtype'] = 'DataScience';
+
+    //     try {
+    //         // Check for existing registration with same email AND event type
+    //         $exists = BootCamp::where('email', $validated['email'])
+    //             ->where('eventtype', 'DataScience')
+    //             ->exists();
+
+    //         if ($exists) {
+    //             return redirect()->back()
+    //                 ->withInput()
+    //                 ->withErrors([
+    //                     'email' => 'This email is already registered for Data Science Bootcamp.'
+    //                 ]);
+    //         }
+
+    //         BootCamp::create($validated);
+
+    //         return redirect()->back()
+    //             ->with('success', 'Data Science Bootcamp registration successful!');
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()
+    //             ->withInput()
+    //             ->withErrors([
+    //                 'error' => 'Registration failed. Please try again later.'
+    //             ]);
+    //     }
+    // }
+
+
+    public function storeDataAcademyAfrica(Request $request)
+    {
+        $validated = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:15',
+            'country' => 'required|string|max:255',
+            'jobtitle' => 'required|string|max:255',
+            'joinas' => 'required|string|in:Student',
+        ]);
+
+        $validated['eventtype'] = 'DataAcademy';
+
+        try {
+            // Check for existing registration with same email AND event type
+            $exists = BootCamp::where('email', $validated['email'])
+                ->where('eventtype', 'DataAcademy')
+                ->exists();
+
+            if ($exists) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors([
+                        'email' => 'This email is already registered for Data Academy Bootcamp.'
+                    ]);
+            }
+
+            BootCamp::create($validated);
+
+            return redirect()->back()
+                ->with('success', 'Data Academy registration successful!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors([
+                    'error' => 'Registration failed. Please try again later.'
+                ]);
+        }
+    }
+    public function bootcampDataacademy(Request $request)
+    {
+        $bootcamps = BootCamp::where('eventtype', 'DataAcademy')->get();
+        return view('Bootcamp.register.data-academy', compact('bootcamps'));
+    }
+    public function bootcampDatascience(Request $request)
+    {
+        $bootcamps = BootCamp::where('eventtype', 'DataScience')->get();
+        return view('Bootcamp.register.data-science', compact('bootcamps'));
+    }
+    public function exportBootcamps($eventtype)
+    {
+        return Excel::download(new BootcampsExport($eventtype), 'bootcamps_' . $eventtype . '.xlsx');
+    }
+
+    public function storeDataScienceBootcamp(Request $request)
+    {
+        $validated = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:15',
+            'country' => 'required|string|max:255',
+            'jobtitle' => 'required|string|max:255',
+            'joinas' => 'required|string|in:Student,Trainer,Admin',
+        ]);
+        
+        $validated['eventtype'] = 'DataScience';
+
+        try {
+            // Check for existing registration
+            $exists = BootCamp::where('email', $validated['email'])
+                ->where('eventtype', 'DataScience')
+                ->exists();
+
+            if ($exists) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors([
+                        'email' => 'This email is already registered for Data Science Bootcamp.'
+                    ]);
+            }
+
+            $registration = BootCamp::create($validated);
+
+            // Generate a unique token for the scholarship link
+            $token = Str::random(40);
+            $registration->update(['scholarship_token' => $token]);
+
+            // Send email with scholarship link
+            Mail::to($validated['email'])->send(new BootcampRegistration(
+                $validated['firstname'],
+                $validated['lastname'],
+                route('scholarship.apply', ['token' => $token])
+            ));
+
+            return redirect()->back()
+                ->with('success', 'Data Science Bootcamp registration successful! Check your email for scholarship application link.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors([
+                    'error' => 'Registration failed. Please try again later.'
+                ]);
+        }
+    }
+
+    public function showScholarshipForm($token)
+    {
+        // Verify the token
+        $registration = BootCamp::where('scholarship_token', $token)->firstOrFail();
+
+        return view('scholarship-form', [
+            'token' => $token,
+            'email' => $registration->email,
+            'firstname' => $registration->firstname,
+            'lastname' => $registration->lastname
+        ]);
+    }
+
+    public function storeScholarshipApplication(Request $request)
+    {
+        $validated = $request->validate([
+            'token' => 'required|string',
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:15',
+            'country' => 'required|string|max:255',
+            'education_level' => 'required|string|max:255',
+            'why_apply' => 'required|string|min:50|max:1000',
+            'referral_source' => 'nullable|string|max:255',
+        ]);
+
+        try {
+            // Verify token is still valid
+            $registration = BootCamp::where('scholarship_token', $validated['token'])
+                ->where('email', $validated['email'])
+                ->firstOrFail();
+
+            // Create scholarship application
+            Scholarship::create($validated);
+
+            // Send confirmation email
+            Mail::to($validated['email'])->send(new ScholarshipConfirmation(
+                $validated['firstname'],
+                $validated['lastname']
+            ));
+
+            // Clear the token so it can't be used again
+            $registration->update(['scholarship_token' => null]);
+
+            return redirect()->route('scholarship.thankyou');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors([
+                    'error' => 'Scholarship application failed. Please try again later.'
+                ]);
+        }
+    }
 }
