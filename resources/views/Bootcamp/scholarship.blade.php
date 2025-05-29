@@ -52,7 +52,7 @@
                                     <td>{{ $scholarship->education_level }}</td>
                                     <td>{{ $scholarship->why_apply }}</td>
                                     <td>{{ $scholarship->referral_source }}</td>
-                                    <td>{{ $scholarship->application_date->format('M d, Y') }}</td>
+                                    <td>{{ $scholarship->created_at->format('M d, Y') }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
