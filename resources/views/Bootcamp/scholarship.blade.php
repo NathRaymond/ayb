@@ -17,41 +17,60 @@
         <div class="col-md-9 col-lg-7">
             <div class="card shadow-sm">
                 <div class="card-header d-flex justify-content-between align-items-center bg-navy text-white">
-                    <h5 class="mb-0">DASHBOARD</h5>
+                    <h5 class="mb-0">Scholarship Applicants</h5>
+                    <a href="#" class="btn btn-white">
+                        <i class="fas fa-file-export me-1"></i> Export Data
+                    </a>
+
                 </div>
                 <div class="card-body p-0">
-                    <div class="row p-4">
-                        <div class="col-md-6 mb-4">
-                            <div class="card border-0 shadow-sm bg-light" style="background-color:#dee2e6 !important; color: #212529;">
-                                <div class="card-body text-center">
-                                    <h6 class="text-uppercase text-muted">Data Science Applicants</h6>
-                                    <h2 class="text-navy" style=" font-weight:bold">{{ $dataScienceCount }}</h2>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 mb-4">
-                            <div class="card border-0 shadow-sm bg-light" style="background-color:#dee2e6 !important; color: #212529;">
-                                <div class="card-body text-center">
-                                    <h6 class="text-uppercase text-muted">Data Academy Applicants</h6>
-                                    <h2 class="text-navy" style=" font-weight:bold">{{ $dataAcademyCount }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="card border-0 shadow-sm bg-light" style="background-color:#dee2e6 !important; color: #212529;">
-                                <div class="card-body text-center">
-                                    <h6 class="text-uppercase text-muted">Scholarship Applicants</h6>
-                                    <h2 class="text-navy" style=" font-weight:bold">{{ $dataScholarshipCount }}</h2>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="table-responsive">
+                        <table id="dataScienceTable" class="table table-bordered dt-responsive nowrap table-striped align-middle mb-0" style="width:100%">
+                            <thead class="table-navy">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">First Name</th>
+                                    <th scope="col">Last Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Country</th>
+                                    <th scope="col">Job Title</th>
+                                    <th scope="col">Join As</th>
+                                    <th scope="col">Event Type</th>
+                                    <th scope="col">Date Registered</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($scholarships as $scholarship)
+                                <tr>
+                                    <th scope="row">{{ $loop->index + 1 }}</th>
+                                    <td>{{ $scholarship->firstname }}</td>
+                                    <td>{{ $scholarship->lastname }}</td>
+                                    <td class="text-truncate" style="max-width: 150px;">{{ $scholarship->email }}</td>
+                                    <td>{{ $scholarship->phone }}</td>
+                                    <td>{{ $scholarship->country }}</td>
+                                    <td>{{ $scholarship->jobtitle }}</td>
+                                    <td>{{ $scholarship->joinas }}</td>
+                                    <td>{{ $scholarship->eventtype }}</td>
+                                    <td>{{ $scholarship->created_at->format('M d, Y') }}</td>
+                                    <td class="d-flex">
+                                        <a href="" class="btn btn-sm btn-outline-navy me-1">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="" class="btn btn-sm btn-outline-navy">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <style>

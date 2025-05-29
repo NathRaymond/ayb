@@ -243,6 +243,11 @@ class EventController extends Controller
         $bootcamps = BootCamp::where('eventtype', 'DataScience')->get();
         return view('Bootcamp.register.data-science', compact('bootcamps'));
     }
+    public function scholarshipApplications(Request $request)
+    {
+        $data['scholarships'] = Scholarship::all();
+        return view('Bootcamp.scholarship', $data);
+    }
     public function exportBootcamps($eventtype)
     {
         return Excel::download(new BootcampsExport($eventtype), 'bootcamps_' . $eventtype . '.xlsx');

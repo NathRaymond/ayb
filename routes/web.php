@@ -9,6 +9,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\MemberController;
 use App\Models\BootCamp;
+use App\Models\Scholarship;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,6 +57,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/datascience/applicant', [EventController::class, 'bootcampDatascience'])->name('bootcamp.datascience');
     Route::get('/dataacademy/applicant', [EventController::class, 'bootcampDataacademy'])->name('bootcamp.dataacademy');
+    Route::get('/admin/scholarships', [EventController::class, 'scholarshipApplications'])->name('scholarship.users');
+
 
     Route::get('/past-event', [EventController::class, 'uploadPastEventPicture'])->name('event.past');
     Route::post('/past-event', [FileController::class, 'upload'])->name('upload');
@@ -92,8 +95,9 @@ Route::post('/quiz-debate', [QuizController::class, 'store'])->name('quiz.store'
 Route::get('/dashboard', function () {
     $dataScienceCount = BootCamp::where('eventtype', 'DataScience')->count();
     $dataAcademyCount = BootCamp::where('eventtype', 'DataAcademy')->count();
+    $dataScholarshipCount = Scholarship::count();
 
-    return view('dashboard', compact('dataScienceCount', 'dataAcademyCount'));
+    return view('dashboard', compact('dataScienceCount', 'dataAcademyCount', 'dataScholarshipCount'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

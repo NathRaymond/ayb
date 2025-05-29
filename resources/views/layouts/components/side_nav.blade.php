@@ -30,6 +30,9 @@
             <a href="{{ route('bootcamp.dataacademy') }}" class="nav-link {{ request()->routeIs('bootcamp.dataacademy') ? 'active' : '' }}">
                 <i class="fas fa-graduation-cap me-2"></i> Data Academy Users
             </a>
+            <a href="{{ route('scholarship.users') }}" class="nav-link {{ request()->routeIs('bootcamp.datascience') ? 'active' : '' }}">
+                <i class="fas fa-database me-2"></i> Scholarship Users
+            </a>
         </nav>
     </div>
 </div>
