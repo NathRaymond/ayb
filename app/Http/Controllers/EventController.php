@@ -331,7 +331,7 @@ class EventController extends Controller
             'phone' => 'required|string|max:15',
             'country' => 'required|string|max:255',
             'scholarship_level' => 'required|string|max:255',
-            'payment_method' => 'required|string|min:50|max:255',
+            'payment_method' => 'required|string|max:255',
             'referral_source' => 'nullable|string|max:255',
         ]);
 
