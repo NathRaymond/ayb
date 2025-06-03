@@ -59,6 +59,20 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="mb-4">
+                            <label for="training_program" class="form-label">Specify the training program</label>
+                            <select id="training_program" name="training_program" class="form-select form-select-lg" required>
+                                <option value="" selected disabled>Select a training program</option>
+                                <option value="AI, Data Science & Machine Learning" {{ old('training_program') == 'AI, Data Science & Machine Learning' ? 'selected' : '' }}>AI, Data Science & Machine Learning</option>
+                                <option value="UI/UX" {{ old('training_program') == 'UI/UX' ? 'selected' : '' }}>UI/UX</option>
+                                <option value="Web Design & Hosting" {{ old('training_program') == 'Web Design & Hosting' ? 'selected' : '' }}>Web Design & Hosting</option>
+                                <option value="Public Speaking" {{ old('training_program') == 'Public Speaking' ? 'selected' : '' }}>Public Speaking</option>
+                                <option value="Other" {{ old('training_program') == 'Other' ? 'selected' : '' }}>Other</option>
+                            </select>
+                            @error('training_program')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
                         <div class="mb-4">
                             <label for="scholarship_level" class="form-label">Preferred Scholarship level (Highest scholarship level you would like us to assist you with)</label>
@@ -85,6 +99,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
 
                         <!-- <div class="mb-4">
                             <label for="why_apply" class="form-label">Why are you applying for this scholarship? (Minimum 50 characters)</label>

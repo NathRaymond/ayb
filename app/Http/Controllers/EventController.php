@@ -334,6 +334,7 @@ class EventController extends Controller
             'scholarship_level' => 'required|string|max:255',
             'payment_method' => 'required|string|max:255',
             'referral_source' => 'nullable|string|max:255',
+            'training_program' => 'nullable|string|max:255',
         ]);
 
         try {
@@ -360,6 +361,7 @@ class EventController extends Controller
                 'country' => $validated['country'],
                 'scholarship_level' => $validated['scholarship_level'],
                 'payment_method' => $validated['payment_method'],
+                'training_program' => $validated['training_program'],
                 'referral_source' => $validated['referral_source'],
                 'application_date' => now(),
             ]);

@@ -22,7 +22,8 @@ class Scholarship extends Model
         'referral_source',
         'application_date',
         'scholarship_level',
-        'payment_method'
+        'payment_method',
+        'training_program',
     ];
 
     public function bootcamp()

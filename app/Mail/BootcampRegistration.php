@@ -26,7 +26,7 @@ class BootcampRegistration extends Mailable
 
     public function build()
     {
-        return $this->subject('Thank You for Registering for AYB Bootcamp')
+        return $this->subject('Thank You for Registering for AYB AI, Data Science and Machine Learning Training!')
                     ->view('emails.bootcamp-registration');
     }
 }
