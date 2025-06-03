@@ -13,7 +13,7 @@
                         </svg>
                     </div>
                     <h1 class="display-5 fw-bold mb-4">Application Submitted Successfully!</h1>
-                    <p class="fs-4">Thank you for applying for the scholarship. We will review your application and get back to you soon.</p>
+                    <p class="fs-4">Thank you for applying for AYB AI, Data Science & Machine Learninge scholarship. We will review your application and get back to you soon.</p>
                     <p class="fs-5">For any questions, please contact us:</p>
                     <p class="fs-5">Phone: +234 810 617 1072, +1 330 400 0513 | Email: aimgr@africanyoungbrains.com </p>
                     <a href="{{ url('/') }}" class="btn btn-primary mt-4 px-4 py-2">Back to Home</a>

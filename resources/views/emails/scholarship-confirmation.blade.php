@@ -8,7 +8,7 @@
 <body>
     <p>Dear {{ $firstname }} {{ $lastname }},</p>
 
-    <p>You've successfully registered for the scholarship. We will get back to you if you are qualified for the scholarship.</p>
+    <p>You've successfully registered for  AYB AI, Data Science & Machine Learning scholarship. We will get back to you if you are qualified for the scholarship.</p>
 
     <p>Thank you for your application!</p>
 
