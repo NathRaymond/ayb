@@ -85,7 +85,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="mb-4">
+                        <!-- <div class="mb-4">
                             <label for="why_apply" class="form-label">Why are you applying for this scholarship? (Minimum 50 characters)</label>
                             <textarea id="why_apply" name="why_apply" class="form-control form-control-lg"
                                 rows="4" required minlength="50">{{ old('why_apply') }}</textarea>
@@ -93,7 +93,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="form-text">Characters: <span id="charCount">0</span>/50</div>
-                        </div>
+                        </div> -->
 
                         <div class="mb-4">
                             <label for="referral_source" class="form-label">How did you hear about us? (Optional)</label>
