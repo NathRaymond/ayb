@@ -34,8 +34,8 @@
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
                                     <th scope="col">Country</th>
-                                    <th scope="col">Education Level</th>
-                                    <th scope="col">Why Apply</th>
+                                    <th scope="col">Scholarship Level</th>
+                                    <th scope="col">Payment Method</th>
                                     <th scope="col">Referral Source</th>
                                     <th scope="col">Application Date</th>
                                 </tr>
@@ -49,8 +49,8 @@
                                     <td class="text-truncate" style="max-width: 150px;">{{ $scholarship->email }}</td>
                                     <td>{{ $scholarship->phone }}</td>
                                     <td>{{ $scholarship->country }}</td>
-                                    <td>{{ $scholarship->education_level }}</td>
-                                    <td>{{ $scholarship->why_apply }}</td>
+                                    <td>{{ $scholarship->scholarship_level }}</td>
+                                    <td>{{ $scholarship->payment_method }}</td>
                                     <td>{{ $scholarship->referral_source }}</td>
                                     <td>{{ $scholarship->created_at->format('M d, Y') }}</td>
                                 </tr>

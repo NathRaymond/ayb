@@ -151,7 +151,7 @@ class EventController extends Controller
         $participants = Participant::all();
         return view('Bootcamp.data-academy', compact('participants'));
     }
-    
+
     // public function storeDataScienceBootcamp(Request $request)
     // {
     //     $validated = $request->validate([
@@ -330,8 +330,8 @@ class EventController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:15',
             'country' => 'required|string|max:255',
-            'education_level' => 'required|string|max:255',
-            'why_apply' => 'required|string|min:50|max:1000',
+            'scholarship_level' => 'required|string|max:255',
+            'payment_method' => 'required|string|min:50|max:255',
             'referral_source' => 'nullable|string|max:255',
         ]);
 
@@ -357,8 +357,8 @@ class EventController extends Controller
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
                 'country' => $validated['country'],
-                'education_level' => $validated['education_level'],
-                'why_apply' => $validated['why_apply'],
+                'scholarship_level' => $validated['scholarship_level'],
+                'payment_method' => $validated['payment_method'],
                 'referral_source' => $validated['referral_source'],
                 'application_date' => now(),
             ]);

@@ -303,10 +303,10 @@
                     <div class="single-footer-widget footer_2">
                         <h4>Follow Us</h4>
                         <div class="social_icon">
-                            <a class="d-block p-1" href="#"> <i class="ti-facebook"></i> African Young Brains_fb</a>
-                            <a class="d-block p-1" href="#"> <i class="ti-twitter-alt"></i> African Young Brains_tw</a>
-                            <a class="d-block p-1" href="#"> <i class="ti-instagram"></i> African Young Brains_ig</a>
-                            <a class="d-block p-1" href="#"> <i class="ti-skype"></i> African Young Brains_sk</a>
+                            <a class="d-block p-1" href="https://www.facebook.com/groups/483055818920169/?ref=share" target="_blank"> <i class="ti-facebook"></i> African Young Brains_fb</a>
+                            <a class="d-block p-1" href="https://www.linkedin.com/groups/9094484" target="_blank"> <i class="ti-linkedin"></i> African Young Brains_linkedin</a>
+                            <a class="d-block p-1" href="https://x.com/aybrains" target="_blank"> <i class="ti-twitter-alt"></i> African Young Brains_tw</a>
+                            <a class="d-block p-1" href="https://www.instagram.com/african_youngbrains/" target="_blank"> <i class="ti-instagram"></i> African Young Brains_ig</a>
                         </div>
                     </div>
                 </div>

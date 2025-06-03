@@ -19,10 +19,10 @@ class Scholarship extends Model
         'joinas',
         'eventtype',
         'scholarship_token',
-        'education_level',
-        'why_apply',
         'referral_source',
-        'application_date'
+        'application_date',
+        'scholarship_level',
+        'payment_method'
     ];
 
     public function bootcamp()
