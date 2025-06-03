@@ -317,7 +317,8 @@ class EventController extends Controller
             'token' => $token,
             'email' => $registration->email,
             'firstname' => $registration->firstname,
-            'lastname' => $registration->lastname
+            'lastname' => $registration->lastname,
+            'phone' => $registration->phone
         ]);
     }
 
