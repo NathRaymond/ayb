@@ -61,30 +61,31 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="scholarship_level" class="form-label">Highest scholarship Level</label>
+                            <label for="scholarship_level" class="form-label">Preferred Scholarship level (Highest scholarship level you would like us to assist you with)</label>
                             <select id="scholarship_level" name="scholarship_level" class="form-select form-select-lg" required>
                                 <option value="" selected disabled>Select scholarship Level</option>
-                                <option value="50" {{ old('scholarship_level') == '50' ? 'selected' : '' }}>50</option>
-                                <option value="70" {{ old('scholarship_level') == '70' ? 'selected' : '' }}>70</option>
-                                <option value="90" {{ old('scholarship_level') == '90' ? 'selected' : '' }}>90</option>
+                                <option value="50" {{ old('scholarship_level') == '50' ? 'selected' : '' }}>50%</option>
+                                <option value="70" {{ old('scholarship_level') == '70' ? 'selected' : '' }}>70%</option>
+                                <option value="90" {{ old('scholarship_level') == '90' ? 'selected' : '' }}>90%</option>
                             </select>
                             @error('scholarship_level')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                         <div class="mb-4">
+                        <div class="mb-4">
                             <label for="payment_method" class="form-label">Payment Method</label>
                             <select id="payment_method" name="payment_method" class="form-select form-select-lg" required>
-                                <option value="" selected disabled>Select scholarship Level</option>
-                                <option value="50" {{ old('payment_method') == '50' ? 'selected' : '' }}>50</option>
-                                <option value="70" {{ old('payment_method') == 'Bachelor\'s Degree' ? 'selected' : '' }}>70</option>
-                                <option value="90" {{ old('payment_method') == '90' ? 'selected' : '' }}>90</option>
+                                <option value="" selected disabled>Select payment method</option>
+                                <option value="Deposit" {{ old('payment_method') == 'Deposit' ? 'selected' : '' }}>Deposit</option>
+                                <option value="Instalmental" {{ old('payment_method') == 'Instalmental' ? 'selected' : '' }}>Instalmental</option>
+                                <option value="Full Payment" {{ old('payment_method') == 'Full Payment' ? 'selected' : '' }}>Full Payment</option>
                             </select>
                             @error('payment_method')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <!-- <div class="mb-4">
                             <label for="why_apply" class="form-label">Why are you applying for this scholarship? (Minimum 50 characters)</label>
                             <textarea id="why_apply" name="why_apply" class="form-control form-control-lg"
