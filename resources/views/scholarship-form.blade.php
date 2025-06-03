@@ -44,7 +44,7 @@
                             <div class="col-md-6 mb-4">
                                 <label for="phone" class="form-label">Phone Number</label>
                                 <input type="tel" id="phone" name="phone" class="form-control form-control-lg"
-                                    placeholder="Enter your phone number" required value="{{ old('phone') }}">
+                                    value="{{ $phone }}" required value="{{ old('phone') }}">
                                 @error('phone')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
