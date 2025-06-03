@@ -290,7 +290,7 @@ class EventController extends Controller
             ));
 
             return redirect()->back()
-                ->with('success', 'Data Science Bootcamp registration successful! Check your email for scholarship application link.');
+                ->with('success', 'Data Science Bootcamp registration successful! Check your email for data science scholarship application link.');
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withInput()
@@ -350,7 +350,7 @@ class EventController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->withErrors([
-                    'error' => 'Scholarship application failed. Please try again later.'
+                    'error' => 'Data Science Scholarship application failed. Please try again later.'
                 ]);
         }
     }

@@ -346,7 +346,7 @@ class EventController extends Controller
                 return redirect()->back()
                     ->withInput()
                     ->withErrors([
-                        'error' => 'Invalid scholarship application link or email mismatch. Please use the link from your registration email.'
+                        'error' => 'Invalid data science scholarship application link or email mismatch. Please use the link from your registration email.'
                     ]);
             }
 

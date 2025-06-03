@@ -24,7 +24,7 @@ class ScholarshipConfirmation extends Mailable
 
     public function build()
     {
-        return $this->subject('Scholarship Application Confirmation')
+        return $this->subject('Data Science Scholarship Application Confirmation')
                     ->view('emails.scholarship-confirmation');
     }
 }

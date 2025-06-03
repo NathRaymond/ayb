@@ -6,7 +6,7 @@
         <div class="col-lg-8">
             <div class="card shadow-lg border-0 rounded-4">
                 <div class="card-body p-5">
-                    <h1 class="mb-5 text-center display-5 fw-bold">Scholarship Application</h1>
+                    <h1 class="mb-5 text-center display-5 fw-bold">AYB Data Science Scholarship Application</h1>
 
                     @if($errors->any())
                     <div class="alert alert-danger">

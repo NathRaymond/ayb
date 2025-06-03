@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Scholarship Application Confirmation</title>
+    <title>AYB Data Science Scholarship Application Confirmation</title>
 </head>
 
 <body>
